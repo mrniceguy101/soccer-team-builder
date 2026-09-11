@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Maker</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Header có nút Hồ sơ Cầu thủ và Lịch sử đấu -->
+    <header class="top-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <div style="width: 130px;"></div>
+      <h1 class="title" style="margin: 0;">TEAM MAKER</h1>
+      <div style="display: flex; gap: 8px;">
+        <button id="openUserHistoryBtn" class="btn btn-secondary" style="font-size: 13px;">📜 Lịch sử đấu</button>
+        <a href="players.html" class="btn btn-secondary" style="font-size: 13px;">📋 Hồ sơ Cầu thủ</a>
+      </div>
+    </header>
+
+    <!-- Khu vực dán danh sách tự động -->
+    <section class="auto-box">
+      <textarea id="pasteInput" placeholder="Dán danh sách tên cầu thủ vào đây (mỗi người 1 dòng hoặc cách nhau bằng dấu phẩy)..."></textarea>
+      <div class="auto-actions">
+        <button id="autoSplitBtn" class="btn btn-primary">⚡ Tự động chia đội</button>
+        <button id="shuffleBtn" class="btn btn-secondary">🔀 Shuffle (Xào lại)</button>
+      </div>
+    </section>
+
+    <!-- Danh sách các Team -->
+    <main class="teams-container" id="teamsContainer"></main>
+
+    <!-- Nút thêm Team thủ công -->
+    <div class="add-team-wrapper">
+      <button id="addTeamBtn" class="btn-icon-plus" title="Thêm 1 team">+</button>
+    </div>
+
+    <!-- Nút Admin góc dưới cùng bên phải -->
+    <button id="openPassModalBtn" class="floating-admin-btn" title="Cơ sở dữ liệu cầu thủ">🔒</button>
+
+    <!-- Modal xem danh sách lịch sử trận đấu cho User -->
+    <div id="userHistoryModal" class="modal" style="display: none;">
+      <div class="modal-content" style="width: 850px; max-height: 85vh;">
+        <div class="modal-header">
+          <h2>Nhật Ký & Lịch Sử Trận Đấu</h2>
+          <button id="closeUserHistoryBtn" class="close-btn">&times;</button>
+        </div>
+        <div class="panel" id="userHistoryListContent" style="display: flex; flex-direction: column; gap: 14px; overflow-y: auto;">
+          <p class="placeholder-text">Đang tải lịch sử đấu...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal nhập Pass -->
+    <div id="passModal" class="modal" style="display: none;">
+      <div class="modal-content modal-auth">
+        <div class="modal-header">
+          <h2>Xác thực Quản trị viên</h2>
+          <button id="closePassModalBtn" class="close-btn">&times;</button>
+        </div>
+        <div class="panel">
+          <p>Nhập mật khẩu để truy cập:</p>
+          <div class="input-inline">
+            <input type="password" id="adminPassword" placeholder="Nhập mật khẩu...">
+            <button id="submitPassBtn" class="btn btn-primary">Xác nhận</button>
+          </div>
+          <p id="authError" class="text-danger" style="display: none;">Mật khẩu không chính xác!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tooltip hiển thị khi rê chuột vào đa giác -->
+  <div id="radarTooltip" class="radar-hover-tooltip" style="display: none;"></div>
+
+  <script src="js/supabase.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

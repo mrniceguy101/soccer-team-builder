@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản trị Cầu thủ - Team Maker</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="app-wrapper">
+    <header class="top-header" style="display: flex; justify-content: space-between; align-items: center;">
+      <h1 class="title">QUẢN TRỊ CẦU THỦ & CHỈ SỐ</h1>
+      <a href="index.html" class="btn btn-secondary">⬅ Quay lại Xếp Team</a>
+    </header>
+
+    <div class="admin-topbar">
+      <div style="display: flex; gap: 8px;">
+        <button id="newPlayerBtn" class="btn btn-primary">+ Thêm cầu thủ mới</button>
+        <button id="openMatchModalBtn" class="btn btn-warning">⚽ Nhập lịch sử trận đấu</button>
+      </div>
+    </div>
+
+    <!-- Cấu hình Gemini API Key cá nhân -->
+    <div class="api-key-bar">
+      <label>🔑 Gemini API Key (Lưu cục bộ):</label>
+      <input type="password" id="geminiApiKeyInput" placeholder="Dán Gemini API Key của bạn vào đây...">
+      <button id="saveApiKeyBtn" class="btn btn-sm btn-secondary">Lưu Key</button>
+    </div>
+
+    <div class="admin-body">
+      <div class="player-sidebar" id="playerSidebar"></div>
+      <div class="player-detail-form" id="playerDetailForm">
+        <p class="placeholder-text">Chọn một cầu thủ bên trái để chỉnh sửa thông số</p>
+      </div>
+    </div>
+
+    <!-- Modal nhập kết quả trận đấu -->
+    <div id="matchModal" class="modal" style="display: none;">
+      <div class="modal-content" style="width: 750px;">
+        <div class="modal-header">
+          <h2>Nhập Lịch Sử Trận Đấu & Cập Nhật Stat</h2>
+          <button id="closeMatchModalBtn" class="close-btn">&times;</button>
+        </div>
+        <div class="panel" style="display: flex; flex-direction: column; gap: 12px;">
+          <label style="font-size: 13px; color: var(--text-muted);">
+            Dán tóm tắt trận đấu (VD: "Đội 1 có Văn A, Văn C. Đội 2 có Văn B, Văn D. Kết quả Đội 1 thắng Đội 2 3-1. Văn A ghi 2 bàn, Văn C kiến tạo 1 bàn. Văn B phòng ngự lỏng lẻo..."):
+          </label>
+          <textarea id="matchLogInput" rows="4" style="width: 100%; background: #111; border: 1px solid var(--panel-border); color: #fff; padding: 8px; border-radius: 4px; font-family: inherit;"></textarea>
+          
+          <button id="analyzeMatchAiBtn" class="btn btn-primary" style="align-self: flex-start;">
+            ⚡ AI Phân Tích & Tính Điểm Điều Chỉnh
+          </button>
+
+          <div id="matchResultPreview" style="display: none; background: #141414; padding: 12px; border-radius: 6px; border: 1px solid var(--panel-border);">
+            <h4 style="margin: 0 0 8px 0; color: var(--accent);">Đề xuất điều chỉnh chỉ số:</h4>
+            <div id="proposedChangesList" style="font-size: 13px; display: flex; flex-direction: column; gap: 6px;"></div>
+            <div style="margin-top: 12px; display: flex; justify-content: flex-end; gap: 8px;">
+              <button id="applyMatchChangesBtn" class="btn btn-success">✔ Đồng ý & Cập nhật lên Cloud</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/supabase.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
